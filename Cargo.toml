@@ -17,3 +17,19 @@ console_error_panic_hook = "0.1.6"
 
 [dependencies.web-sys]
 version = "0.3.4"
+
+features = [
+    'console',
+    'Window',
+    'Document',
+    'DocumentFragment',
+    'Node',
+    'Element',
+    'HtmlElement',
+    'HtmlSlotElement',
+    'HtmlTemplateElement',
+    'CustomElementRegistry',
+    'ShadowRoot',
+    'ShadowRootInit',
+    'ShadowRootMode',
+]    
