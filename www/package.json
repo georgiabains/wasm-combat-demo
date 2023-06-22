@@ -1,0 +1,46 @@
+{
+  "name": "wasm-combat-demo",
+  "version": "0.1.0",
+  "description": "Combat demo with Rust, wasm and JS.",
+  "main": "index.js",
+  "bin": {
+    "create-wasm-webpack-app": ".bin/create-wasm-webpack-app.js"
+  },
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "start": "webpack serve --open --config webpack.dev.js --stats-error-details"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georgiabains/wasm-combat-demo.git"
+  },
+  "keywords": [
+    "webassembly",
+    "wasm",
+    "rust",
+    "webpack"
+  ],
+  "author": "Georgia Bains",
+  "homepage": "",
+  "dependencies": {
+    "html-webpack-plugin": "^5.5.3",
+    "npm": "^9.7.1",
+    "wasm-game-of-life": "file:../pkg/"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^8.1.0",
+    "css-loader": "^6.8.1",
+    "hello-wasm-pack": "^0.1.0",
+    "mini-css-extract-plugin": "^2.7.6",
+    "node-sass": "^9.0.0",
+    "sass": "^1.63.4",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^3.3.3",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^4.6.0",
+    "webpack-dev-server": "^4.0.0-beta.1"
+  },
+  "browser": {
+    "wasm-combat-demo": false
+  }
+}
