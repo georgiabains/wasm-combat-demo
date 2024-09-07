@@ -52,8 +52,12 @@ function setEventListeners() {
   })
 }
 
+/**
+ * Deal damage to target entity.
+ * @param {Number} attackValue - Attack value.
+ * @param {Entity} targetEntity - Entity that receives damage.
+ */
 function attackEntity(attackValue, targetEntity) {
-  console.log(attackValue, targetEntity)
   targetEntity.set_current_hp(attackValue)
   setEntityCurrentHealth(targetEntity.get_name(), targetEntity.get_current_hp())
 }
