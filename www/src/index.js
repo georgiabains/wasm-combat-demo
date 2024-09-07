@@ -1,4 +1,4 @@
-import init, { Entity } from "../../pkg/wasm_combat_demo";
+import { Entity } from "../../pkg/wasm_combat_demo";
 
 const selectors = {
   creature: {
@@ -14,27 +14,48 @@ const selectors = {
   }
 }
 
-init().then(() => {
-  const creature = Entity.new(30, 30, 5, 'creature')
-  const player = Entity.new(30, 30, 5, 'player')
+const creature = Entity.new(30, 30, 5, 'creature')
+const player = Entity.new(30, 30, 5, 'player')
 
-  initEntity('creature', creature)
-  initEntity('player', player)
+initGame()
 
-  document.querySelector(selectors.player.attackButton).addEventListener('click', () => {
-    creature.set_current_hp(player.get_attack())
-    setEntityCurrentHealth('creature', creature.get_current_hp())
-  })
-})
+/**
+ * Run all scripts to initialise the game.
+ */
+function initGame() {
+  initEntity(creature)
+  initEntity(player)
+
+  setEventListeners()
+}
 
 /**
  * Initialise entity using ID & entity.
- * @param {String} entityId - Entity reference in `selectors`
  * @param {Entity} entity - Entity object
  */
-function initEntity(entityId, entity) {
-  setEntityCurrentHealth(entityId, entity.get_current_hp())
-  setEntityTotalHealth(entityId, entity.get_total_hp())
+function initEntity(entity) {
+  // TODO: Need unique reference for every entity to allow multiple instances of the same entity
+  setEntityCurrentHealth(entity.get_name(), entity.get_current_hp())
+  setEntityTotalHealth(entity.get_name(), entity.get_total_hp())
+}
+
+/**
+ * Set event listeners.
+ */
+function setEventListeners() {
+  
+  /**
+   * Player attacks creature.
+   */
+  document.querySelector(selectors.player.attackButton).addEventListener('click', () => {
+    attackEntity(player.get_attack(), creature)
+  })
+}
+
+function attackEntity(attackValue, targetEntity) {
+  console.log(attackValue, targetEntity)
+  targetEntity.set_current_hp(attackValue)
+  setEntityCurrentHealth(targetEntity.get_name(), targetEntity.get_current_hp())
 }
 
 /**
