@@ -16,6 +16,7 @@ pub struct Entity {
     total_hp: u32,
     attack: u32,
     name: String,
+    // TODO: alive/dead state
 }
 
 #[wasm_bindgen]
@@ -50,6 +51,7 @@ impl Entity {
     }
 
     fn reduce_current_hp(current_hp: &mut u32, reduce_value: u32) {
+        // TODO: prevent being set to less than 0
         *current_hp = *current_hp - reduce_value
     }
 
