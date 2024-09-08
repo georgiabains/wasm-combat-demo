@@ -51,7 +51,11 @@ impl Entity {
     }
 
     fn reduce_current_hp(current_hp: &mut u32, reduce_value: u32) {
-        // TODO: prevent being set to less than 0
+        if reduce_value > *current_hp {
+            *current_hp = 0;
+            return
+        }
+
         *current_hp = *current_hp - reduce_value
     }
 
