@@ -27,6 +27,8 @@ function initGame() {
   initEntity(player)
 
   setEventListeners()
+
+  console.dir(document.querySelector(selectors.creature.healthProgress))
 }
 
 /**
@@ -35,7 +37,7 @@ function initGame() {
  */
 function initEntity(entity) {
   // TODO: Need unique reference for every entity to allow multiple instances of the same entity
-  setEntityCurrentHealth(entity.get_name(), entity.get_current_hp())
+  setEntityCurrentHealth(entity, entity.get_current_hp())
   setEntityTotalHealth(entity.get_name(), entity.get_total_hp())
 }
 
@@ -49,6 +51,18 @@ function setEventListeners() {
    */
   document.querySelector(selectors.player.attackButton).addEventListener('click', () => {
     attackEntity(player.get_attack(), creature)
+    // TODO: Send outgoing attack message
+    document.querySelector(selectors.player.attackButton).setAttribute('disabled', true)
+
+    if (!creature.get_current_hp()) {
+      return
+    }
+
+    setTimeout(() => {
+      attackEntity(creature.get_attack(), player)
+      document.querySelector(selectors.player.attackButton).removeAttribute('disabled')
+      // TODO: add damage message
+    }, 3000)
   })
 }
 
@@ -59,7 +73,7 @@ function setEventListeners() {
  */
 function attackEntity(attackValue, targetEntity) {
   targetEntity.set_current_hp(attackValue)
-  setEntityCurrentHealth(targetEntity.get_name(), targetEntity.get_current_hp())
+  setEntityCurrentHealth(targetEntity, targetEntity.get_current_hp())
 }
 
 /**
@@ -67,12 +81,13 @@ function attackEntity(attackValue, targetEntity) {
  * @param {String} entityId - Entity reference in `selectors`
  * @param {Number} currentHealth - Current health value
  */
-function setEntityCurrentHealth(entityId, currentHealth) {
-  if (!selectors[entityId]) {
+function setEntityCurrentHealth(entity, currentHealth) {
+  if (!selectors[entity.get_name()]) {
     return
   }
 
-  document.querySelector(selectors[entityId].healthCurrent).textContent = currentHealth
+  document.querySelector(selectors[entity.get_name()].healthCurrent).textContent = currentHealth
+  document.querySelector(selectors[entity.get_name()].healthProgress).value = entity.get_current_hp() / entity.get_total_hp() * 100
 }
 
 /**
