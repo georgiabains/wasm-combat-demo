@@ -37,8 +37,8 @@ function initGame() {
  * @param {Entity} entity - Entity object
  */
 function initEntity(entity) {
-  setEntityCurrentHealth(entity, entity.get_current_hp())
-  setEntityTotalHealth(entity.get_name(), entity.get_total_hp())
+  renderEntityCurrentHealth(entity, entity.get_current_hp())
+  renderEntityTotalHealth(entity.get_name(), entity.get_total_hp())
 }
 
 /**
@@ -63,7 +63,7 @@ function setEventListeners() {
       attackEntity(creature, player)
       document.querySelector(selectors.player.attackButton).removeAttribute('disabled')
       // TODO: add damage message
-    }, 3000)
+    }, 2000)
   })
 }
 
@@ -85,7 +85,7 @@ function recordGameAction(message) {
  */
 function attackEntity(controllerEntity, targetEntity) {
   targetEntity.set_current_hp(controllerEntity.get_attack())
-  setEntityCurrentHealth(targetEntity, targetEntity.get_current_hp())
+  renderEntityCurrentHealth(targetEntity, targetEntity.get_current_hp())
 
   const message = `${controllerEntity.get_name().toUpperCase()} dealt ${controllerEntity.get_attack()} damage to ${targetEntity.get_name().toUpperCase()}`
   recordGameAction(message)
@@ -96,7 +96,7 @@ function attackEntity(controllerEntity, targetEntity) {
  * @param {String} entityId - Entity reference in `selectors`
  * @param {Number} currentHealth - Current health value
  */
-function setEntityCurrentHealth(entity, currentHealth) {
+function renderEntityCurrentHealth(entity, currentHealth) {
   if (!selectors[entity.get_name()]) {
     return
   }
@@ -110,7 +110,7 @@ function setEntityCurrentHealth(entity, currentHealth) {
  * @param {String} entityId - Entity reference in `selectors`
  * @param {Number} totalHealth - Total health value
  */
-function setEntityTotalHealth(entityId, totalHealth) {
+function renderEntityTotalHealth(entityId, totalHealth) {
   if (!selectors[entityId]) {
     return
   }
