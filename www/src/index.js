@@ -51,7 +51,6 @@ function setEventListeners() {
    */
   document.querySelector(selectors.player.attackButton).addEventListener('click', () => {
     attackEntity(player, creature)
-    // TODO: Send outgoing attack message
     document.querySelector(selectors.player.attackButton).setAttribute('disabled', true)
 
     if (!creature.get_current_hp()) {
@@ -62,7 +61,6 @@ function setEventListeners() {
     setTimeout(() => {
       attackEntity(creature, player)
       document.querySelector(selectors.player.attackButton).removeAttribute('disabled')
-      // TODO: add damage message
     }, 2000)
   })
 }

@@ -16,7 +16,7 @@ pub struct Entity {
     total_hp: u32,
     attack: u32,
     name: String,
-    // TODO: alive/dead state
+    // Adding an alive/dead state here might make things simpler
 }
 
 #[wasm_bindgen]
