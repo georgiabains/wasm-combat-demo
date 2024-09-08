@@ -25,7 +25,7 @@
   "dependencies": {
     "html-webpack-plugin": "^5.5.3",
     "npm": "^9.7.1",
-    "wasm-game-of-life": "file:../pkg/"
+    "wasm-combat-demo": "file:../pkg/"
   },
   "devDependencies": {
     "copy-webpack-plugin": "^8.1.0",
