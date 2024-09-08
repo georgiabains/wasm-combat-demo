@@ -6,6 +6,9 @@ const selectors = {
     healthTotal: '[data-creature="health-total"]',
     healthProgress: '[data-creature="health-progress"]'
   },
+  game: {
+    log: '[data-game="log"]',
+  },
   player: {
     attackButton: '[data-player="attack-button"]',
     healthCurrent: '[data-player="health-current"]',
@@ -27,8 +30,6 @@ function initGame() {
   initEntity(player)
 
   setEventListeners()
-
-  console.dir(document.querySelector(selectors.creature.healthProgress))
 }
 
 /**
@@ -36,7 +37,6 @@ function initGame() {
  * @param {Entity} entity - Entity object
  */
 function initEntity(entity) {
-  // TODO: Need unique reference for every entity to allow multiple instances of the same entity
   setEntityCurrentHealth(entity, entity.get_current_hp())
   setEntityTotalHealth(entity.get_name(), entity.get_total_hp())
 }
@@ -50,16 +50,17 @@ function setEventListeners() {
    * Player attacks creature.
    */
   document.querySelector(selectors.player.attackButton).addEventListener('click', () => {
-    attackEntity(player.get_attack(), creature)
+    attackEntity(player, creature)
     // TODO: Send outgoing attack message
     document.querySelector(selectors.player.attackButton).setAttribute('disabled', true)
 
     if (!creature.get_current_hp()) {
+      recordGameAction('Player wins!')
       return
     }
 
     setTimeout(() => {
-      attackEntity(creature.get_attack(), player)
+      attackEntity(creature, player)
       document.querySelector(selectors.player.attackButton).removeAttribute('disabled')
       // TODO: add damage message
     }, 3000)
@@ -67,13 +68,27 @@ function setEventListeners() {
 }
 
 /**
+ * Message to add to game log.
+ * @param {String} message 
+ */
+function recordGameAction(message) {
+  const messageContainer = document.createElement('li')
+  messageContainer.textContent = message
+
+  document.querySelector(selectors.game.log).appendChild(messageContainer)
+}
+
+/**
  * Deal damage to target entity.
- * @param {Number} attackValue - Attack value.
+ * @param {Number} controllerEntity - Entity that deals damage.
  * @param {Entity} targetEntity - Entity that receives damage.
  */
-function attackEntity(attackValue, targetEntity) {
-  targetEntity.set_current_hp(attackValue)
+function attackEntity(controllerEntity, targetEntity) {
+  targetEntity.set_current_hp(controllerEntity.get_attack())
   setEntityCurrentHealth(targetEntity, targetEntity.get_current_hp())
+
+  const message = `${controllerEntity.get_name().toUpperCase()} dealt ${controllerEntity.get_attack()} damage to ${targetEntity.get_name().toUpperCase()}`
+  recordGameAction(message)
 }
 
 /**
